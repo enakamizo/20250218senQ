@@ -57,3 +57,14 @@ jobs:
 
       - name: Zip artifact for deployment
         run: zip release.zip ./deploy -r
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    steps:
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: "app-advanced3-test2"
+          package: release.zip        
